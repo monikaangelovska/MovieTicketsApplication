@@ -1,0 +1,78 @@
+﻿@model List<MovieTickets.Domain.DomainModels.Movie>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+      padding: 2rem 0rem;
+    }
+
+    .card-img {
+      border-bottom-left-radius: 0px;
+      border-bottom-right-radius: 0px;
+    }
+
+    .card-title {
+      margin-bottom: 0.3rem;
+    }
+
+    .cat {
+      display: inline-block;
+      margin-bottom: 1rem;
+    }
+
+    .fa-users {
+      margin-left: 1rem;
+    }
+
+    .card-footer {
+      font-size: 0.8rem;
+}
+</style>
+<div class="container">
+    <div class="row mb-3">
+        <div class="col-md-2">
+            <a class="btn btn-primary btn-sm" asp-action="Create">Insert new movie</a>
+        </div>
+    </div>
+    <div class="row mb-3">
+        @for (int i = 0; i<Model.Count; i++)
+        {
+            var element = Model[i];
+            if (i % 2 == 0)
+            {
+                @:<div class="row mb-3">
+            }
+
+            <div class="col-md-6">
+              <div class="card mb-2">
+                <img class="card-img" src="@element.Image" alt="Movie Image">
+                <div class="card-body">
+                  <h4 class="card-title">@element.Name</h4>
+                  <small class="text-muted cat">
+                    <i class="bi bi-stopwatch"></i> @element.Duration min / 
+                    <i class="bi bi-film"></i> @element.Genre / 
+                    <i class="bi bi-star"></i> @element.Rating
+                  </small>
+                  <p class="card-text">@element.Description</p>
+                  <p class="card-text text-info text-left fs-6">Playing date-time: @element.PlayingDate</p>
+                  <p class="card-text text-right text-danger fs-6"><i class="bi bi-tag">Price: @element.TicketPrice ДЕН</i></p>
+                </div>
+                <div class="card-footer">
+                  <a asp-controller="Movies" asp-action="AddMovieToShoppingCart" asp-route-id="@element.Id" class="btn btn-info">Buy ticket</a>
+                  <a asp-controller="Movies" asp-action="Edit" asp-route-id="@element.Id" class="btn btn-secondary">Edit</a>
+                  <a asp-controller="Movies" asp-action="Delete" asp-route-id="@element.Id" class="btn btn-secondary">Delete</a>
+                </div>
+              </div>
+            </div>
+
+            if (i % 2 == 1)
+            {
+                @:</div>
+            }
+        }
+	</div>
+</div>
